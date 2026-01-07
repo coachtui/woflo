@@ -64,7 +64,8 @@ We deploy two Railway services from this monorepo:
 
 1) **api**
    - **Root directory (Railway setting): `apps/api`**
-   - Build/Start: provided by `apps/api/nixpacks.toml`
+   - Build: Railpack detects Python and installs from `requirements.txt`
+   - Start: `start.sh` (committed at `apps/api/start.sh`)
    - Required env vars (server-side):
      - `DATABASE_URL`
      - `SUPABASE_JWKS_URL`
@@ -72,12 +73,13 @@ We deploy two Railway services from this monorepo:
 
 2) **worker**
    - **Root directory (Railway setting): `apps/worker`**
-   - Build/Start: provided by `apps/worker/nixpacks.toml`
+   - Build: Railpack detects Python and installs from `requirements.txt`
+   - Start: `start.sh` (committed at `apps/worker/start.sh`)
    - Required env vars: same as api + `WORKER_ID`
 
 Notes:
 - Because this is a monorepo, Railway must point each service at the correct **Root Directory** so the builder can find `requirements.txt`.
-- Nixpacks will run the `pip install -r ...` commands from each service’s `nixpacks.toml`.
+- If Railway is using **Railpack** (new default), it will look for `start.sh` in each service root.
 - Do **not** ship `SUPABASE_SERVICE_ROLE_KEY` or any LLM keys to frontend clients.
 
 ## Migrations
