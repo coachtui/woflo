@@ -63,19 +63,20 @@ python -m apps.worker.worker
 We deploy two Railway services from this monorepo:
 
 1) **api**
-   - Root directory: repo root
-   - Start command: provided by `apps/api/nixpacks.toml`
+   - **Root directory (Railway setting): `apps/api`**
+   - Build/Start: provided by `apps/api/nixpacks.toml`
    - Required env vars (server-side):
      - `DATABASE_URL`
      - `SUPABASE_JWKS_URL`
      - `SUPABASE_SERVICE_ROLE_KEY`
 
 2) **worker**
-   - Root directory: repo root
-   - Start command: provided by `apps/worker/nixpacks.toml`
+   - **Root directory (Railway setting): `apps/worker`**
+   - Build/Start: provided by `apps/worker/nixpacks.toml`
    - Required env vars: same as api + `WORKER_ID`
 
 Notes:
+- Because this is a monorepo, Railway must point each service at the correct **Root Directory** so the builder can find `requirements.txt`.
 - Nixpacks will run the `pip install -r ...` commands from each service’s `nixpacks.toml`.
 - Do **not** ship `SUPABASE_SERVICE_ROLE_KEY` or any LLM keys to frontend clients.
 
