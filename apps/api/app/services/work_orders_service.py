@@ -5,9 +5,9 @@ from typing import Any
 
 import asyncpg
 
-from apps.api.app.core.security import Profile
-from apps.api.app.models.pydantic.common import WorkOrderCreateRequest
-from apps.api.app.services.audit_service import write_audit_log
+from app.core.security import Profile
+from app.models.pydantic.common import WorkOrderCreateRequest
+from app.services.audit_service import write_audit_log
 
 
 async def create_work_order(

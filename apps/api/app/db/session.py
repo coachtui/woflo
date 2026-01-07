@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncpg
 
-from apps.api.app.core.config import settings
+from app.core.config import settings
 
 
 _pool: asyncpg.Pool | None = None

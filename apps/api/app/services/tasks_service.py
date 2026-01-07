@@ -4,10 +4,10 @@ from typing import Any
 
 import asyncpg
 
-from apps.api.app.core.errors import ForbiddenError
-from apps.api.app.core.security import Profile
-from apps.api.app.models.pydantic.common import TaskCreateReplaceRequest, TaskPatchRequest
-from apps.api.app.services.audit_service import write_audit_log
+from app.core.errors import ForbiddenError
+from app.core.security import Profile
+from app.models.pydantic.common import TaskCreateReplaceRequest, TaskPatchRequest
+from app.services.audit_service import write_audit_log
 
 
 async def replace_task_plan(

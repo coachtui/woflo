@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends
 
-from apps.api.app.core.security import Profile, require_roles
-from apps.api.app.db.session import get_pool
-from apps.api.app.models.pydantic.common import UnitCreateRequest, UnitResponse
-from apps.api.app.services.units_service import create_unit, list_units
+from app.core.security import Profile, require_roles
+from app.db.session import get_pool
+from app.models.pydantic.common import UnitCreateRequest, UnitResponse
+from app.services.units_service import create_unit, list_units
 
 
 router = APIRouter(prefix="/v1/units")

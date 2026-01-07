@@ -2,7 +2,7 @@ import logging
 import os
 import time
 
-from apps.worker.app.core.logging import configure_logging
+from app.core.logging import configure_logging
 
 
 configure_logging()

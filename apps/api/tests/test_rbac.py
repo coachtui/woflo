@@ -1,9 +1,9 @@
 import pytest
 
-from apps.api.app.core.errors import ForbiddenError
-from apps.api.app.core.security import Profile
-from apps.api.app.models.pydantic.common import TaskPatchRequest
-from apps.api.app.services.tasks_service import patch_task
+from app.core.errors import ForbiddenError
+from app.core.security import Profile
+from app.models.pydantic.common import TaskPatchRequest
+from app.services.tasks_service import patch_task
 
 
 class DummyPool:

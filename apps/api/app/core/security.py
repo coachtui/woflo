@@ -10,10 +10,10 @@ import jwt
 from fastapi import Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from apps.api.app.core.config import settings
-from apps.api.app.core.errors import AuthError, ForbiddenError
-from apps.api.app.db.queries import fetchrow
-from apps.api.app.db.session import get_pool
+from app.core.config import settings
+from app.core.errors import AuthError, ForbiddenError
+from app.db.queries import fetchrow
+from app.db.session import get_pool
 
 
 Role = Literal["admin", "dispatcher", "tech"]

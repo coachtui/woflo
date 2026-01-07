@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends
 
-from apps.api.app.core.security import Profile, get_current_profile, require_roles
-from apps.api.app.db.session import get_pool
-from apps.api.app.models.pydantic.common import TaskCreateReplaceRequest, TaskPatchRequest, TaskResponse
-from apps.api.app.services.tasks_service import patch_task, replace_task_plan
+from app.core.security import Profile, get_current_profile, require_roles
+from app.db.session import get_pool
+from app.models.pydantic.common import TaskCreateReplaceRequest, TaskPatchRequest, TaskResponse
+from app.services.tasks_service import patch_task, replace_task_plan
 
 
 router = APIRouter(prefix="/v1")

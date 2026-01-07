@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends
 
-from apps.api.app.core.security import Profile, get_current_profile
+from app.core.security import Profile, get_current_profile
 
 
 router = APIRouter(prefix="/v1")

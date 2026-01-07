@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends, Query
 
-from apps.api.app.core.security import Profile, require_roles
-from apps.api.app.db.session import get_pool
-from apps.api.app.models.pydantic.common import WorkOrderCreateRequest, WorkOrderCreateResponse, WorkOrderListItem
-from apps.api.app.services.work_orders_service import create_work_order, list_work_orders
+from app.core.security import Profile, require_roles
+from app.db.session import get_pool
+from app.models.pydantic.common import WorkOrderCreateRequest, WorkOrderCreateResponse, WorkOrderListItem
+from app.services.work_orders_service import create_work_order, list_work_orders
 
 
 router = APIRouter(prefix="/v1/work-orders")

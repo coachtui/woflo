@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 
-from apps.api.app.core.logging import configure_logging
-from apps.api.app.routers.health import router as health_router
-from apps.api.app.routers.me import router as me_router
-from apps.api.app.routers.tasks import router as tasks_router
-from apps.api.app.routers.technicians import router as technicians_router
-from apps.api.app.routers.units import router as units_router
-from apps.api.app.routers.work_orders import router as work_orders_router
+from app.core.logging import configure_logging
+from app.routers.health import router as health_router
+from app.routers.me import router as me_router
+from app.routers.tasks import router as tasks_router
+from app.routers.technicians import router as technicians_router
+from app.routers.units import router as units_router
+from app.routers.work_orders import router as work_orders_router
 
 
 configure_logging()

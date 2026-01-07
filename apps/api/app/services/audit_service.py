@@ -4,7 +4,7 @@ from typing import Any, Literal
 
 import asyncpg
 
-from apps.api.app.core.security import Profile
+from app.core.security import Profile
 
 
 EntityType = Literal["work_order", "task", "schedule", "parts", "ai_job"]

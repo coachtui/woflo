@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Depends
 
-from apps.api.app.core.security import Profile, require_roles
-from apps.api.app.db.session import get_pool
-from apps.api.app.models.pydantic.common import TechnicianCreateRequest, TechnicianResponse
-from apps.api.app.services.technicians_service import create_technician, list_technicians
+from app.core.security import Profile, require_roles
+from app.db.session import get_pool
+from app.models.pydantic.common import TechnicianCreateRequest, TechnicianResponse
+from app.services.technicians_service import create_technician, list_technicians
 
 
 router = APIRouter(prefix="/v1/technicians")
