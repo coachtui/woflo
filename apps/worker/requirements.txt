@@ -1,5 +1,5 @@
 anthropic==0.40.0
-asyncpg==0.29.0
+asyncpg==0.30.0
 openai==1.57.4
 ortools==9.12.4544
 pydantic==2.10.4
