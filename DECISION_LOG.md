@@ -57,3 +57,47 @@ This file records implementation decisions made to fill gaps while staying withi
    - Why chosen: simplest safe default that unblocks API usage without manually inserting profiles.
    - Expected impact: any new auth signup becomes a tech in the demo org.
    - Rollback plan: remove/replace trigger when we introduce invites / org assignment.
+
+9) **Job queue implementation (Milestone B)**
+   - Decision: use PostgreSQL `FOR UPDATE SKIP LOCKED` for concurrent job processing
+   - Options considered:
+     - Redis queue with workers (external dependency)
+     - PostgreSQL-based queue (chosen)
+     - Message broker like RabbitMQ (too complex for MVP)
+   - Why chosen:
+     - No additional infrastructure required
+     - ACID guarantees from PostgreSQL
+     - Simple deployment (worker just needs DATABASE_URL)
+     - Natural fit with existing asyncpg stack
+   - Implementation details:
+     - Exponential backoff retry: 2^attempts minutes
+     - Dead-letter after max_attempts (default: 3)
+     - Graceful shutdown on SIGTERM/SIGINT
+     - Job handlers are stubs for Milestone C (scheduler) and D (AI enrichment)
+   - Expected impact: enables async job processing for scheduler and AI enrichment
+   - Rollback plan: if PostgreSQL queue becomes a bottleneck (unlikely at <10k jobs/day), migrate to dedicated queue service
+
+10) **OR-Tools CP-SAT scheduler (Milestone C)**
+   - Decision: use Google OR-Tools CP-SAT solver for constraint-based scheduling
+   - Options considered:
+     - Custom greedy heuristic (too simplistic for complex constraints)
+     - OR-Tools CP-SAT (chosen)
+     - Commercial solvers like Gurobi (cost prohibitive)
+     - Genetic algorithms (unpredictable solution quality)
+   - Why chosen:
+     - Free, open-source, production-ready
+     - Native support for no-overlap, time windows, assignments
+     - Proven performance on scheduling problems
+     - Rich constraint modeling capabilities
+     - Good documentation and Python API
+   - Implementation details:
+     - Time horizon converted to minutes for integer domain
+     - Optional intervals for tech/bay assignment flexibility
+     - Locked tasks modeled as fixed intervals that block resources
+     - Soft constraints (skills, parts) via penalty variables
+     - Hard constraints (bay type) via allowed assignments
+     - Objective minimizes: due date penalties + priority penalties + skill mismatch + parts not ready
+     - 30-second default time limit (configurable)
+     - Detailed infeasibility analysis when no solution found
+   - Expected impact: automated optimal scheduling respecting all constraints
+   - Rollback plan: if CP-SAT proves too slow (>30s for typical problems), consider simplifying model or using heuristics for initial solution

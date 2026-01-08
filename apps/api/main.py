@@ -2,7 +2,9 @@ from fastapi import FastAPI
 
 from app.core.logging import configure_logging
 from app.routers.health import router as health_router
+from app.routers.jobs import router as jobs_router
 from app.routers.me import router as me_router
+from app.routers.schedules import router as schedules_router
 from app.routers.tasks import router as tasks_router
 from app.routers.technicians import router as technicians_router
 from app.routers.units import router as units_router
@@ -19,3 +21,5 @@ app.include_router(work_orders_router, tags=["work_orders"])
 app.include_router(tasks_router, tags=["tasks"])
 app.include_router(units_router, tags=["units"])
 app.include_router(technicians_router, tags=["technicians"])
+app.include_router(jobs_router, tags=["jobs"])
+app.include_router(schedules_router, tags=["schedules"])

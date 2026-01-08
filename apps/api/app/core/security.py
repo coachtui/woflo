@@ -134,3 +134,7 @@ def require_roles(*allowed: Role):
         return profile
 
     return _dep
+
+
+# Alias for backward compatibility
+require_role = require_roles
