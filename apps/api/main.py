@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.logging import configure_logging
 from app.routers.health import router as health_router
@@ -14,6 +15,22 @@ from app.routers.work_orders import router as work_orders_router
 configure_logging()
 
 app = FastAPI(title="Woflo API", version="0.1.0")
+
+# CORS middleware for local development and production
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:3001",
+        "https://*.up.railway.app",
+        "https://*.railway.app",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(health_router, tags=["health"])
 app.include_router(me_router, tags=["auth"])
