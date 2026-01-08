@@ -2,7 +2,14 @@
 nixPkgs = ["python312"]
 
 [phases.install]
-cmds = ["python -m pip install --upgrade pip", "pip install -r requirements.txt"]
+cmds = [
+  "python -m pip install --upgrade pip",
+  "pip install --no-cache-dir --prefer-binary -r requirements.txt"
+]
 
 [start]
 cmd = "python worker.py"
+
+[variables]
+# Increase build timeout for large packages like ortools
+NIXPACKS_BUILD_TIMEOUT = "900"
