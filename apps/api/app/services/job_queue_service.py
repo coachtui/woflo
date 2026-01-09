@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from datetime import datetime, timedelta
 from typing import Any
 from uuid import UUID
@@ -35,6 +36,9 @@ async def enqueue_job(
     if run_after is None:
         run_after = datetime.utcnow()
 
+    # Serialize payload to JSON string for PostgreSQL jsonb column
+    payload_json = json.dumps(payload)
+
     row = await pool.fetchrow(
         """
         insert into public.job_queue (org_id, type, payload, status, run_after, max_attempts)
@@ -43,7 +47,7 @@ async def enqueue_job(
         """,
         str(org_id),
         job_type,
-        payload,
+        payload_json,
         run_after,
         max_attempts,
     )
