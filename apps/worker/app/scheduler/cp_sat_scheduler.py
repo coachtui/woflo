@@ -28,6 +28,12 @@ def datetime_to_minutes(dt: datetime | Any, base: datetime | Any) -> int:
     if isinstance(base, date) and not isinstance(base, datetime):
         base = datetime.combine(base, datetime.min.time())
     
+    # Strip timezone info to avoid mixing naive and aware datetimes
+    if dt is not None and hasattr(dt, 'tzinfo') and dt.tzinfo is not None:
+        dt = dt.replace(tzinfo=None)
+    if base is not None and hasattr(base, 'tzinfo') and base.tzinfo is not None:
+        base = base.replace(tzinfo=None)
+    
     return int((dt - base).total_seconds() / 60)
 
 
