@@ -50,13 +50,13 @@ async def create_schedule(
     
     Only admins and dispatchers can create schedules.
     """
-    # TEMP: Mock profile for development
+    # TEMP: Mock profile for development (using real org from DB)
     profile = Profile(
-        id="dev-user",
-        organization_id="dev-org",
+        id="00000000-0000-0000-0000-000000000001",
+        org_id="c6cd5638-d905-4673-9124-c957725acd00",  # Demo Diesel Shop
         role="admin",
-        full_name="Dev User",
-        email="dev@example.com"
+        email="dev@example.com",
+        display_name="Dev User"
     )
     
     pool = await get_pool()
@@ -82,13 +82,13 @@ async def get_schedule(
     
     Returns schedule run metadata including solver stats and objective breakdown.
     """
-    # TEMP: Mock profile for development
+    # TEMP: Mock profile for development (using real org from DB)
     profile = Profile(
-        id="dev-user",
-        organization_id="dev-org",
+        id="00000000-0000-0000-0000-000000000001",
+        org_id="c6cd5638-d905-4673-9124-c957725acd00",  # Demo Diesel Shop
         role="admin",
-        full_name="Dev User",
-        email="dev@example.com"
+        email="dev@example.com",
+        display_name="Dev User"
     )
     
     pool = await get_pool()
@@ -115,13 +115,13 @@ async def get_schedule_items_endpoint(
     
     Returns all task assignments with technician, bay, and time information.
     """
-    # TEMP: Mock profile for development
+    # TEMP: Mock profile for development (using real org from DB)
     profile = Profile(
-        id="dev-user",
-        organization_id="dev-org",
+        id="00000000-0000-0000-0000-000000000001",
+        org_id="c6cd5638-d905-4673-9124-c957725acd00",  # Demo Diesel Shop
         role="admin",
-        full_name="Dev User",
-        email="dev@example.com"
+        email="dev@example.com",
+        display_name="Dev User"
     )
     
     pool = await get_pool()
@@ -156,13 +156,13 @@ async def list_schedules(
     
     Returns schedule runs ordered by creation time (newest first).
     """
-    # TEMP: Mock profile for development
+    # TEMP: Mock profile for development (using real org from DB)
     profile = Profile(
-        id="dev-user",
-        organization_id="dev-org",
+        id="00000000-0000-0000-0000-000000000001",
+        org_id="c6cd5638-d905-4673-9124-c957725acd00",  # Demo Diesel Shop
         role="admin",
-        full_name="Dev User",
-        email="dev@example.com"
+        email="dev@example.com",
+        display_name="Dev User"
     )
     
     pool = await get_pool()

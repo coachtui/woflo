@@ -15,8 +15,18 @@ router = APIRouter(prefix="/v1")
 async def create_or_replace_tasks(
     work_order_id: str,
     req: TaskCreateReplaceRequest,
-    profile: Profile = Depends(require_roles("admin", "dispatcher")),
+    # TEMP: Remove auth for development - TODO: Add back for production
+    # profile: Profile = Depends(require_roles("admin", "dispatcher")),
 ):
+    # TEMP: Mock profile for development (using real org from DB)
+    profile = Profile(
+        id="00000000-0000-0000-0000-000000000001",
+        org_id="c6cd5638-d905-4673-9124-c957725acd00",  # Demo Diesel Shop
+        role="admin",
+        email="dev@example.com",
+        display_name="Dev User"
+    )
+    
     pool = await get_pool()
     rows = await replace_task_plan(pool, profile=profile, work_order_id=work_order_id, req=req)
     return rows
@@ -26,8 +36,18 @@ async def create_or_replace_tasks(
 async def patch_task_endpoint(
     task_id: str,
     req: TaskPatchRequest,
-    profile: Profile = Depends(get_current_profile),
+    # TEMP: Remove auth for development - TODO: Add back for production
+    # profile: Profile = Depends(get_current_profile),
 ):
+    # TEMP: Mock profile for development (using real org from DB)
+    profile = Profile(
+        id="00000000-0000-0000-0000-000000000001",
+        org_id="c6cd5638-d905-4673-9124-c957725acd00",  # Demo Diesel Shop
+        role="admin",
+        email="dev@example.com",
+        display_name="Dev User"
+    )
+    
     # Service layer enforces tech-only limitations.
     pool = await get_pool()
     row = await patch_task(pool, profile=profile, task_id=task_id, req=req)
