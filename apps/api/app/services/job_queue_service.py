@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 from uuid import UUID
 
@@ -34,7 +34,8 @@ async def enqueue_job(
         Job ID (UUID as string)
     """
     if run_after is None:
-        run_after = datetime.utcnow()
+        # Use timezone-aware UTC datetime to avoid timezone conversion issues
+        run_after = datetime.now(timezone.utc)
 
     # Serialize payload to JSON string for PostgreSQL jsonb column
     payload_json = json.dumps(payload)
