@@ -19,8 +19,15 @@ from app.scheduler.models import (
 logger = logging.getLogger(__name__)
 
 
-def datetime_to_minutes(dt: datetime, base: datetime) -> int:
+def datetime_to_minutes(dt: datetime | Any, base: datetime | Any) -> int:
     """Convert datetime to minutes from base."""
+    # Handle datetime.date objects by converting to datetime
+    from datetime import date
+    if isinstance(dt, date) and not isinstance(dt, datetime):
+        dt = datetime.combine(dt, datetime.min.time())
+    if isinstance(base, date) and not isinstance(base, datetime):
+        base = datetime.combine(base, datetime.min.time())
+    
     return int((dt - base).total_seconds() / 60)
 
 
