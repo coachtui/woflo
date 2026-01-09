@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import Any, Literal
 
 import asyncpg
@@ -29,6 +30,9 @@ async def write_audit_log(
     diff: dict[str, Any] | None = None,
     reason: str | None = None,
 ) -> None:
+    # Serialize diff to JSON string for PostgreSQL jsonb column
+    diff_json = json.dumps(diff) if diff is not None else None
+    
     async with pool.acquire() as conn:
         await conn.execute(
             """
@@ -40,6 +44,6 @@ async def write_audit_log(
             entity_type,
             entity_id,
             action,
-            diff,
+            diff_json,
             reason,
         )
