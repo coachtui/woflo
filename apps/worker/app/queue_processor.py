@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 from datetime import datetime
 from typing import Any, Callable
@@ -194,6 +195,10 @@ async def process_job(pool: asyncpg.Pool, worker_id: str) -> bool:
     payload = job["payload"]
     attempts = job["attempts"]
     max_attempts = job["max_attempts"]
+    
+    # Parse payload if it's a string (from database JSON column)
+    if isinstance(payload, str):
+        payload = json.loads(payload)
     
     logger.info(
         "job_processing_started",
