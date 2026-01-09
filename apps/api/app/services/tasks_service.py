@@ -10,6 +10,42 @@ from app.models.pydantic.common import TaskCreateReplaceRequest, TaskPatchReques
 from app.services.audit_service import write_audit_log
 
 
+async def list_tasks(
+    pool: asyncpg.Pool,
+    *,
+    profile: Profile,
+) -> list[dict[str, Any]]:
+    """List all tasks for the organization."""
+    rows = await pool.fetch(
+        """
+        select
+          t.id::text as id,
+          t.work_order_id::text as work_order_id,
+          t.type,
+          t.status,
+          t.required_skill,
+          t.required_skill_is_hard,
+          t.required_bay_type,
+          t.earliest_start,
+          t.latest_finish,
+          t.duration_minutes_low,
+          t.duration_minutes_high,
+          t.lock_flag,
+          t.locked_tech_id::text as locked_tech_id,
+          t.locked_bay_id::text as locked_bay_id,
+          t.locked_start_at,
+          t.locked_end_at,
+          t.created_at,
+          t.updated_at
+        from public.tasks t
+        where t.org_id = $1::uuid
+        order by t.created_at desc
+        """,
+        profile.org_id,
+    )
+    return [dict(r) for r in rows]
+
+
 async def replace_task_plan(
     pool: asyncpg.Pool,
     *,
