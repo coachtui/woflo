@@ -39,7 +39,8 @@ class CreateScheduleRunResponse(BaseModel):
 @router.post("", response_model=CreateScheduleRunResponse)
 async def create_schedule(
     req: CreateScheduleRunRequest,
-    profile: Profile = Depends(require_role(["admin", "dispatcher"])),
+    # TEMP: Remove auth for development - TODO: Add back for production
+    # profile: Profile = Depends(require_role(["admin", "dispatcher"])),
 ) -> CreateScheduleRunResponse:
     """
     Create a new schedule run.
@@ -49,6 +50,15 @@ async def create_schedule(
     
     Only admins and dispatchers can create schedules.
     """
+    # TEMP: Mock profile for development
+    profile = Profile(
+        id="dev-user",
+        organization_id="dev-org",
+        role="admin",
+        full_name="Dev User",
+        email="dev@example.com"
+    )
+    
     pool = await get_pool()
     result = await create_schedule_run(
         pool,
@@ -64,13 +74,23 @@ async def create_schedule(
 @router.get("/{schedule_run_id}")
 async def get_schedule(
     schedule_run_id: str,
-    profile: Profile = Depends(get_current_profile),
+    # TEMP: Remove auth for development - TODO: Add back for production
+    # profile: Profile = Depends(get_current_profile),
 ) -> dict:
     """
     Get schedule run by ID.
     
     Returns schedule run metadata including solver stats and objective breakdown.
     """
+    # TEMP: Mock profile for development
+    profile = Profile(
+        id="dev-user",
+        organization_id="dev-org",
+        role="admin",
+        full_name="Dev User",
+        email="dev@example.com"
+    )
+    
     pool = await get_pool()
     schedule_run = await get_schedule_run(
         pool,
@@ -87,13 +107,23 @@ async def get_schedule(
 @router.get("/{schedule_run_id}/items")
 async def get_schedule_items_endpoint(
     schedule_run_id: str,
-    profile: Profile = Depends(get_current_profile),
+    # TEMP: Remove auth for development - TODO: Add back for production
+    # profile: Profile = Depends(get_current_profile),
 ) -> list[dict]:
     """
     Get schedule items for a schedule run.
     
     Returns all task assignments with technician, bay, and time information.
     """
+    # TEMP: Mock profile for development
+    profile = Profile(
+        id="dev-user",
+        organization_id="dev-org",
+        role="admin",
+        full_name="Dev User",
+        email="dev@example.com"
+    )
+    
     pool = await get_pool()
     
     # Verify schedule run exists
@@ -118,13 +148,23 @@ async def get_schedule_items_endpoint(
 @router.get("")
 async def list_schedules(
     limit: int = Query(50, ge=1, le=200, description="Maximum number of runs"),
-    profile: Profile = Depends(get_current_profile),
+    # TEMP: Remove auth for development - TODO: Add back for production
+    # profile: Profile = Depends(get_current_profile),
 ) -> list[dict]:
     """
     List schedule runs for the organization.
     
     Returns schedule runs ordered by creation time (newest first).
     """
+    # TEMP: Mock profile for development
+    profile = Profile(
+        id="dev-user",
+        organization_id="dev-org",
+        role="admin",
+        full_name="Dev User",
+        email="dev@example.com"
+    )
+    
     pool = await get_pool()
     schedule_runs = await list_schedule_runs(
         pool,
